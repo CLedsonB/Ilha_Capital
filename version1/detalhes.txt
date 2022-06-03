@@ -1,0 +1,5 @@
+Sem suporte contra erros do usuário
+Somente mercado de joias funciona
+Sem encerramento
+5 bugs internos
+Converte somente valores inteiros
