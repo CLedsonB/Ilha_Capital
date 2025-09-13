@@ -16,34 +16,21 @@ NAO = ['NÃO','Não','N','não','n','nao']
 #praticidade do usuario
 #Suporte da funcao ganheBragas()
 nome = [
-'Maria','José',
-'Antonio','Joao',
-'Ana','Luiz',
-'Paulo','Carlos',
-'Manoel','Pedro',
-'Francisca','Frascisco',
-'Marcos','Raimundo',
-'Sebastiao','Antonio',
-'Marcel','Jorge',
-'Geraldo','Adriana',
-'Sandra','Luis',
-'Fernando','Fabio',
-'Roberto','Marcio',
-'Edson','Andre',
-'Sergio','Josefa',
-'Patricia','Daniel',
-'Rodrigo','Rafael',
-'Joaquim','Vera',
-'Ricardo','Eduardo',
-'Terezinha','Sonia',
-'Alexandre','Rita',
-'Luciana','Claudio',
-'Rosa','Benedito',
-'Leandro','Manoela',
-'Alice','Raimunda',
-'Mario','Vitor',
-'Iago','Matias',
-'Amanda','Elias'
+'Maria','José','Antonio','Joao',
+'Ana','Luiz','Paulo','Carlos',
+'Manoel','Pedro','Francisca','Frascisco',
+'Marcos','Raimundo','Sebastiao','Antonio',
+'Marcel','Jorge','Geraldo','Adriana',
+'Sandra','Luis','Fernando','Fabio',
+'Roberto','Marcio','Edson','Andre',
+'Sergio','Josefa','Patricia','Daniel',
+'Rodrigo','Rafael','Joaquim','Vera',
+'Ricardo','Eduardo','Tereza','Sonia',
+'Alexandre','Rita','Luciana','Claudio',
+'Rosa','Benedito','Leandro','Manoela',
+'Alice','Mario','Vitor','Beatriz',
+'Iago','Matias','Amanda','Elias',
+'Joana','Renata','Gabriel','Humberto'
 ]
 
 #Compras e vendas somente com doits
@@ -51,15 +38,15 @@ nome = [
 joia = [
 ('Anel de pirata',58.5),
 ('Anel dragão',37.9),
-('Peça de Diamante',1640.0),
-('Peça de Ouro',1430.0),
-('Peça de Prata',920.0),
-('Peça de Bronze',488.0),
+('Peça de Diamante',740.0),
+('Peça de Ouro',530.0),
+('Peça de Prata',320.0),
+('Peça de Bronze',188.0),
 ('Peça de Cobre',120.0),
 ('Brinco estrela',46.9),
 ('Brinco lua',33.3),
 ('Colar de peixe',30.3),
-('Estatua de sereia',99.8),
+('Estatua de sereia',299.8),
 ('Pingente Ouro branco',120.87),
 ('Pulseira de Ouro',97.4),
 ('Pulseira de Prata',54.2),
@@ -89,9 +76,9 @@ alimento = [
 ('Peixe-Agulha', 5.2),
 ('Piaba', 16.5),
 ('Sardinha', 4.5),
-('Camarão', 45.4),
-('Camarão pistola', 68.3),
-('Ostra', 56.2),
+('Camarão', 35.4),
+('Camarão pistola', 48.3),
+('Ostra', 51.2),
 ('Mexilhão', 32.0),
 ('Lula', 130.2),
 ('Polvo',183.9),
@@ -151,8 +138,8 @@ def ganharDoits():
 	print('\n\tResponda aos calculos e ganhe Doits!!!\n')
 	try:
 		for num in range(5):
-			valor1 = rand(15) + 1
-			valor2 = rand(15) + 1
+			valor1 = rand(30) + 1
+			valor2 = rand(30) + 1
 			print(valor1,'+',valor2)
 			valor = input(' ~> ')	
 			valor = floatConversor(valor)
@@ -213,9 +200,9 @@ def conversao():
 	global doit, braga
 	msm = '''
 \t***Conversão realizada***
-\n\nGraças ao nosso sistema de deposito
+\nGraças ao nosso sistema de deposito
 imediato o valor convetido já se
-encotra disponivél para uso. Bom proveito\n
+encotra disponivel para uso. Bom proveito\n
 '''
 	print('''
 	Sabendo que:
@@ -229,7 +216,7 @@ encotra disponivél para uso. Bom proveito\n
 	try:
 		num = floatConversor(num)
 		if num == 1:
-			d = input('Quantidade de Doits para converter? ')
+			d = input('Quantidade de Doits para converter?\n ~> ')
 			d = floatConversor(d)
 		
 			if d > doit:
@@ -238,13 +225,13 @@ encotra disponivél para uso. Bom proveito\n
 				convertido = d*1.6
 				doit -= d
 				braga += convertido
-				print('%.2f D$ = %.2f B$' %(d,d*1.6))
+				print('\n%.2f D$ = %.2f B$' %(d,d*1.6))
 				print('\n\tProcessando solicitação...')
 				t.sleep(2)
 				print(msm)
 			
 		elif num == 2:
-			b = input('Quantidade de Bragas para converter? ')
+			b = input('Quantidade de Bragas para converter?\n ~> ')
 			b = floatConversor(b)
 			if b > braga:
 				print('\nVocê não tem tudo isso, meu caro ^_^')
@@ -252,7 +239,7 @@ encotra disponivél para uso. Bom proveito\n
 				convertido = b*0.625
 				braga -= b
 				doit += convertido
-				print('%.2f B$ = %.2f D$' %(b,b*0.625))
+				print('\n%.2f B$ = %.2f D$' %(b,b*0.625))
 				print('\n\tProcessando solicitação...')
 				t.sleep(2)
 				print(msm)
@@ -267,12 +254,13 @@ def transacao(lista,moeda,varejo):
 	global SIM,NAO
 	lista.sort()
 	i = 1
-	print('')
 	if len(lista) == len(alimento):
+		print('\tSaldo : ',moeda,' B$\n')
 		for (item,valor) in lista:
 			print(' ',i,'.',item,' = ',valor,'B$')
 			i += 1
 	else:
+		print('\tSaldo : ',moeda,' D$\n')
 		for (item,valor) in lista:
 			print (' ',i,'.',item,' = ',valor,'D$')
 			i += 1
@@ -280,7 +268,7 @@ def transacao(lista,moeda,varejo):
 	print('\n***Insira 0 para encerrar as compras\n')
 	while True:
 		try:
-			produto = int(input('Insira o número do produto: '))
+			produto = int(input('Insira o número do produto\n ~> '))
 		except:
 			print('[ERROR] - Não dá pra trabalha com esse valor (0_0)')
 			break
@@ -290,7 +278,7 @@ def transacao(lista,moeda,varejo):
 		if produto == 0:
 			print('\n\t<3 Volte sempre <3\n')
 			break	
-		quantidade = input('\nQuantidade desse produto(unidade/kilo): ')
+		quantidade = input('\nQuantidade desse produto(unidade/kilo)\n ~> ')
 		try:
 			if len(lista) == len(alimento):
 				quantidade = floatConversor(quantidade)
@@ -306,7 +294,7 @@ def transacao(lista,moeda,varejo):
 		else:
 			print('\n',lista[produto-1][0],'.....',quantidade,'Unidades' if quantidade > 1 else 'Unidade',' = ', subtotal,'D$\n')
 		while True:
-			confirmar = input('Confirme a compra com sim ou nao : ')
+			confirmar = input('Confirme a compra com sim ou nao\n ~> ')
 			print('\n')
 			if SIM.count(confirmar) == 1:
 				if moeda >= subtotal:
@@ -329,6 +317,7 @@ def compras():
 	global doit,braga, itemUnidade,itemKilo
 	print('''
 	****BEM VINDO***
+
 	realize aqui suas compras
 	
 	1.Mercado de joias e pedras
@@ -354,4 +343,5 @@ def compras():
 #_______Encerramento do game_________
 def encerramento():
 	print('\n\tObrigado pela atenção...\nEssa área está passando por ajustes... lol\n')
+	clear()
 	exit()

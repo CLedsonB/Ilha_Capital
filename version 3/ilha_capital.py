@@ -30,7 +30,7 @@ while True:
 	''')
 	try:
 		opc = ''
-		opc = int(input('~> '))
+		opc = int(input(' ~> '))
 	except:
 		print('\n[ERROR] - Não é um número (o_O)')
 
@@ -50,7 +50,6 @@ while True:
 		braga, doit = compras()
 		limpar(3)
 	elif opc == 6:
-		
 		print('Alimentos'.center(15,'_'))
 		print('')
 		for key in itemKilo.keys():
