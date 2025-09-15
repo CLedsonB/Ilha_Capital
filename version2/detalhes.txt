@@ -1,3 +1,0 @@
-Alguns suportes a erros do usuário
-Atualização de bugs
-Melhor recepção de numeros decimais
