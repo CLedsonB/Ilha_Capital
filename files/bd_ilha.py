@@ -9,6 +9,8 @@ braga = 0
 doit = 0
 itemKilo = {}
 itemUnidade = {}
+itemPeca = []
+vida = 5
 SIM = ['SIM','Sim','sim','s','S']
 NAO = ['NÃO','Não','N','não','n','nao']
 
@@ -20,7 +22,7 @@ nome = [
 'Ana','Luiz','Paulo','Carlos',
 'Manoel','Pedro','Francisca','Frascisco',
 'Marcos','Raimundo','Sebastiao','Antonio',
-'Marcel','Jorge','Geraldo','Adriana',
+'Marcelo','Jorge','Geraldo','Adriana',
 'Sandra','Luis','Fernando','Fabio',
 'Roberto','Marcio','Edson','Andre',
 'Sergio','Josefa','Patricia','Daniel',
@@ -89,6 +91,14 @@ alimento = [
 ('Bagaço de coco', 20.2),
 ('Limão', 7.3)
 ]
+
+pecas = [
+	['Mastro P','Paubique','Toras'], # jangada
+	['Vela','Quilha','Trapezio','Cordas de controle','Estrutura de sustentacao'],  # Asa delta
+	['Envoltorio','Cesto','Queimador','Tanque de propano','Cordas de suspensao','Valvula de parachute','altimetro'], # balao
+	['Casco','Proa','Popa','Conves','Leme','Helice','Mastro G','Ancora','Ponte de comando'], # navio
+]
+
 #Transforma todas as primeiras letras
 #da frase em Maiusculas
 
@@ -106,7 +116,7 @@ def limpar(seg):
 	clear()
 
 #_______Converte strings e inteiros____
-#em float	
+#em float
 def floatConversor(s):
 	ponto = s.find('.')
 	virgula = s.find(',')
@@ -141,10 +151,10 @@ def ganharDoits():
 			valor1 = rand(30) + 1
 			valor2 = rand(30) + 1
 			print(valor1,'+',valor2)
-			valor = input(' ~> ')	
+			valor = input(' ~> ')
 			valor = floatConversor(valor)
 			premio = (rand(100)+1) / 10 #[1,10]
-		
+
 			if valor == valor1+valor2:
 				soma += premio
 				print('\n\tParabéns!!! Você ganhou',premio,'D$\n')
@@ -195,7 +205,7 @@ def ganharBragas():
 	return braga
 
 #_______________Converter suas moedas_______
-#Braga <-> Doit	
+#Braga <-> Doit
 def conversao():
 	global doit, braga
 	msm = '''
@@ -218,7 +228,7 @@ encotra disponivel para uso. Bom proveito\n
 		if num == 1:
 			d = input('Quantidade de Doits para converter?\n ~> ')
 			d = floatConversor(d)
-		
+
 			if d > doit:
 				print('\nVocê não tem tudo isso, meu caro ^_^')
 			else:
@@ -229,7 +239,7 @@ encotra disponivel para uso. Bom proveito\n
 				print('\n\tProcessando solicitação...')
 				t.sleep(2)
 				print(msm)
-			
+
 		elif num == 2:
 			b = input('Quantidade de Bragas para converter?\n ~> ')
 			b = floatConversor(b)
@@ -246,27 +256,29 @@ encotra disponivel para uso. Bom proveito\n
 		else:
 			print('\nTODO ERRADO - Número sem utilidade\n')
 	except:
-		print('\n[ERROR] - Não é um número \(0_0)/')
+		print('\n[ERROR] - Não é um número \(0_0)/ ')
 	return (braga,doit)
 
 #Suporte da funcao compras()
 def transacao(lista,moeda,varejo):
 	global SIM,NAO
 	lista.sort()
-	i = 1
-	if len(lista) == len(alimento):
-		print('\tSaldo : ',moeda,' B$\n')
-		for (item,valor) in lista:
-			print(' ',i,'.',item,' = ',valor,'B$')
-			i += 1
-	else:
-		print('\tSaldo : ',moeda,' D$\n')
-		for (item,valor) in lista:
-			print (' ',i,'.',item,' = ',valor,'D$')
-			i += 1
 
-	print('\n***Insira 0 para encerrar as compras\n')
 	while True:
+		i = 1
+		clear()
+		if len(lista) == len(alimento):
+			print('\tSaldo : ',moeda,' B$\n')
+			for (item,valor) in lista:
+				print(' ',i,'.',item,' = ',valor,'B$')
+				i += 1
+		else:
+			print('\tSaldo : ',moeda,' D$\n')
+			for (item,valor) in lista:
+				print (' ',i,'.',item,' = ',valor,'D$')
+				i += 1
+		print('\n***Insira 0 para encerrar as compras\n')
+
 		try:
 			produto = int(input('Insira o número do produto\n ~> '))
 		except:
@@ -277,7 +289,7 @@ def transacao(lista,moeda,varejo):
 			break
 		if produto == 0:
 			print('\n\t<3 Volte sempre <3\n')
-			break	
+			break
 		quantidade = input('\nQuantidade desse produto(unidade/kilo)\n ~> ')
 		try:
 			if len(lista) == len(alimento):
@@ -300,7 +312,10 @@ def transacao(lista,moeda,varejo):
 				if moeda >= subtotal:
 					moeda -= subtotal
 					print('\tCompra concluída $$')
-					varejo[lista[produto-1][0]] = quantidade
+					try:
+						varejo[lista[produto-1][0]] += quantidade
+					except:
+						varejo[lista[produto-1][0]] = quantidade
 				else:
 					print('\tVocê não tem saldo suficiente :(')
 			elif NAO.count(confirmar) == 1:
@@ -319,11 +334,11 @@ def compras():
 	****BEM VINDO***
 
 	realize aqui suas compras
-	
+
 	1.Mercado de joias e pedras
 	2.Mercado de veiculos
 	3.Mercado de alimentação
-	
+
 	''')
 	mercado = input('\t ~> ')
 	mercado = floatConversor(mercado)
@@ -340,8 +355,41 @@ def compras():
 		print('\n[ERROR] - Mercado inexistente!')
 	return (braga,doit)
 
-#_______Encerramento do game_________
+#______Sistema de sobrevivencia_______
+
+def alimentacao():
+	global vida, itemKilo
+
+	if itemKilo:
+		ultA = list(itemKilo.keys())[-1]
+		ultK = itemKilo[ultA]
+		size = len(itemKilo)
+
+
+		if size > 0:
+			if ultK > 0.5:
+				itemKilo[ultA] -= 0.5
+				if vida < 10:
+					vida += 1
+			else:
+				if vida < 10:
+					vida += 1
+				itemKilo.pop(ultA)
+	else:
+		if vida > 1:
+			vida -= 1
+		else:
+			vida = 0
+			print('\n\n\t[NAO SOBREVIVEU]\n\n')
+			exit()
+	return vida
+
+
+#  lista   | 0 | 0 |  3  |  2  |  1  |  1  |  1  |  1  |  1  |
+#  comida  | 0 | 0 | 0.5 | 0.5 | 2.5 | 2.0 | 1.5 | 1.0 | 0.5 |
+#  vida    | 5 | 4 |  5  |  6  |  7  |  8  |  9  |  10 | 10  |
+
+
 def encerramento():
 	print('\n\tObrigado pela atenção...\nEssa área está passando por ajustes... lol\n')
-	clear()
 	exit()

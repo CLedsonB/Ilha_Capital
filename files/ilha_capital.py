@@ -5,6 +5,7 @@
 #Sistema para ganha dinheiro acertando palavras
 #Gastar dinheiro com besteira
 from bd_ilha import *
+clear()
 
 print('\t***Bem vindo a ilha capital***\n')
 print('''
@@ -18,8 +19,10 @@ você acumula dinheiro para fugir.\n
 ''')
 
 while True:
-	print('''
+	print(f'''
+						Vida : {vida}
 	--Digite um dos numeros a seguir:
+
 	1 - Consultar Saldo
 	2 - Ganhar Doits
 	3 - Ganhar Bragas
@@ -34,6 +37,7 @@ while True:
 	except:
 		print('\n[ERROR] - Não é um número (o_O)')
 
+	clear()
 	if opc == 1:
 		print('\n\tSaldo:\n\t %.2f D$ (Doits)\n\t %.2f B$ (Bragas)' %(doit,braga))
 		limpar(3)
@@ -54,13 +58,13 @@ while True:
 		print('')
 		for key in itemKilo.keys():
 			print(' ~> ',key,' : ',itemKilo[key],'Kgs' if itemKilo[key] > 1 else 'Kg')
-			
+		print()
 		print('Objetos'.center(15,'_'))
 		print('')
 		for key in itemUnidade.keys():
 			print(' ~> ', key,': ',itemUnidade[key],'Unidades' if itemUnidade[key] > 1 else 'Unidade')
 		limpar(1)
-			
+
 	elif opc == 7:
 		encerramento()
 	elif opc == 34:
@@ -69,3 +73,5 @@ while True:
 	else:
 		print('\n[ERROR] - Número sem utilidade (~_~)')
 		limpar(2)
+
+	vida = alimentacao()
