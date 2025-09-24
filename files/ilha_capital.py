@@ -20,6 +20,7 @@ você acumula dinheiro para fugir.\n
 
 while True:
 	print(f'''
+						 Dia : {dias}
 						Vida : {vida}
 	--Digite um dos numeros a seguir:
 
@@ -29,8 +30,10 @@ while True:
 	4 - Converter suas moedas
 	5 - Fazer compras
 	6 - Seus itens
-	7 - Encerrar partida
+	7 - Tentar fugir
+	8 - Desistir
 	''')
+
 	try:
 		opc = ''
 		opc = int(input(' ~> '))
@@ -43,10 +46,10 @@ while True:
 		limpar(3)
 	elif opc == 2:
 		doit = ganharDoits()
-		limpar(4)
+		limpar(3)
 	elif opc == 3:
 		braga = ganharBragas()
-		limpar(4)
+		limpar(3)
 	elif opc == 4:
 		braga, doit = conversao()
 		limpar(5)
@@ -59,13 +62,22 @@ while True:
 		for key in itemKilo.keys():
 			print(' ~> ',key,' : ',itemKilo[key],'Kgs' if itemKilo[key] > 1 else 'Kg')
 		print()
+
 		print('Objetos'.center(15,'_'))
 		print('')
 		for key in itemUnidade.keys():
 			print(' ~> ', key,': ',itemUnidade[key],'Unidades' if itemUnidade[key] > 1 else 'Unidade')
+		print()
+
+		print('Pecas'.center(15,'_'))
+		print('')
+		for key in itemPeca.keys():
+			print(' ~> ', key,': ',itemPeca[key],'Unidades' if itemPeca[key] > 1 else 'Unidade')
 		limpar(1)
 
 	elif opc == 7:
+		fugir()
+	elif opc == 8:
 		encerramento()
 	elif opc == 34:
 		bugImagem()
@@ -75,3 +87,4 @@ while True:
 		limpar(2)
 
 	vida = alimentacao()
+	dias += 1

@@ -5,12 +5,13 @@ from bugs_ilha import *
 from random import randrange as rand
 clear = lambda: os.system('cls' if os.name == 'nt' else 'clear')
 
-braga = 0
-doit = 0
+braga = 500
+doit = 500
+dias = 1
+vida = 10
 itemKilo = {}
 itemUnidade = {}
-itemPeca = []
-vida = 5
+itemPeca = {}
 SIM = ['SIM','Sim','sim','s','S']
 NAO = ['NÃO','Não','N','não','n','nao']
 
@@ -85,19 +86,46 @@ alimento = [
 ('Lula', 130.2),
 ('Polvo',183.9),
 ('Lagosta', 74.8),
-('Repolho', 6.8),
-('Cenoura',8.3),
-('Tomate', 5.9),
 ('Bagaço de coco', 20.2),
-('Limão', 7.3)
+('Carangueijo', 7.3)
 ]
 
 pecas = [
-	['Mastro P','Paubique','Toras'], # jangada
-	['Vela','Quilha','Trapezio','Cordas de controle','Estrutura de sustentacao'],  # Asa delta
-	['Envoltorio','Cesto','Queimador','Tanque de propano','Cordas de suspensao','Valvula de parachute','altimetro'], # balao
-	['Casco','Proa','Popa','Conves','Leme','Helice','Mastro G','Ancora','Ponte de comando'], # navio
+('Mastro P',50),
+('Paubique',35),
+('Toras',20),
+# JANGADA 0 - 2
+('Vela',30),
+('Quilha',20),
+('Trapezio',100),
+('Cordas de controle',35),
+('Estrutura de sustentacao',80),
+# ASA DELTA 3 - 7
+('Envoltorio',50),
+('Cesto',35),
+('Queimador',70),
+('Tanque de propano',120),
+('Cordas de suspensao',40),
+('Valvula de parachute',60),
+('Altimetro',100),
+# BALAO 8 - 14
+('Casco',35),
+('Proa',40),
+('Popa',50),
+('Conves',120),
+('Leme',80),
+('Helice',90),
+('Mastro G',40),
+('Ancora',60),
+('Ponte de comando',120),
+# NAVIO 15 - 23
 ]
+
+pecas1 = [tupla for indice, tupla in enumerate(pecas) if indice <= 2 ]
+pecas2 = [tupla for indice, tupla in enumerate(pecas) if indice >= 3 and indice <= 7]
+pecas3 = [tupla for indice, tupla in enumerate(pecas) if indice >= 8 and indice <= 14]
+pecas4 = [tupla for indice, tupla in enumerate(pecas) if indice >= 15 and indice <= 23]
+
 
 #Transforma todas as primeiras letras
 #da frase em Maiusculas
@@ -266,7 +294,6 @@ def transacao(lista,moeda,varejo):
 
 	while True:
 		i = 1
-		clear()
 		if len(lista) == len(alimento):
 			print('\tSaldo : ',moeda,' B$\n')
 			for (item,valor) in lista:
@@ -327,21 +354,72 @@ def transacao(lista,moeda,varejo):
 			break
 	return (lista,moeda, varejo)
 
+
+def transacaoPecas(lista, moeda, varejo):
+	global SIM, NAO
+	codigo = []
+
+	print('\tSaldo : ',moeda,' D$\n')
+	for i in range(3):
+		num = rand(len(pecas))
+		codigo.append(num)
+		nome, valor = pecas[num]
+		print (' ',num+1,'.',nome,' = ',valor,'D$')
+	print('\n***Insira 0 para encerrar a compra\n')
+
+	try:
+		produto = int(input('Insira o número do produto\n ~> '))
+	except:
+		print('[ERROR] - Não dá pra trabalha com esse valor (0_0)')
+	if produto > len(lista):
+		print('\n[ERROR] - Número inválido (0.0)\n')
+	elif produto == 0:
+		print('\n\t<3 Volte sempre <3\n')
+	elif  produto in codigo:
+		item = lista[produto-1][0]
+		valor = lista[produto-1][1]
+		print('\n',item,'..... 1 Unidade = ',valor,'D$\n')
+		while True:
+			confirmar = input('Confirme a compra com sim ou nao\n ~> ')
+			print('\n')
+			if SIM.count(confirmar) == 1:
+				if moeda >= valor:
+					moeda -= valor
+					print('\tCompra concluída $$')
+					try:
+						varejo[item] += 1
+					except:
+						varejo[item] = 1
+				else:
+					print('\tVocê não tem saldo suficiente :(')
+			elif NAO.count(confirmar) == 1:
+				print('\tCompra cancelada, tente de novo\n\tnosso produtos são da melhor qualidade :D')
+			else:
+				print('\t[ERROR] - Comando invalido, tente novamente')
+			t.sleep(2)
+			print('\n')
+			break
+	else:
+		print('\n [ERROR] - Codigo invalido')
+	return (lista,moeda,varejo)
+
 #____Gaste aqui seu suado dinheiro____
 def compras():
-	global doit,braga, itemUnidade,itemKilo
+	global doit,braga, itemUnidade,itemKilo, itemPeca
 	print('''
 	****BEM VINDO***
 
 	realize aqui suas compras
 
-	1.Mercado de joias e pedras
-	2.Mercado de veiculos
-	3.Mercado de alimentação
+	1.Mercado de Joias
+	2.Mercado de Veiculos
+	3.Mercado de Alimentação
+	4.Mercado de Pecas de veiculos
 
 	''')
 	mercado = input('\t ~> ')
 	mercado = floatConversor(mercado)
+	clear()
 	if mercado == 1:
 		global joia
 		joia,doit,itemUnidade = transacao(joia,doit,itemUnidade)
@@ -351,9 +429,54 @@ def compras():
 	elif mercado == 3:
 		global alimento
 		alimento,braga,itemKilo = transacao(alimento,braga,itemKilo)
+	elif mercado == 4:
+		global pecas
+		pecas,doit,itemPeca = transacaoPecas(pecas,doit,itemPeca)
 	else:
 		print('\n[ERROR] - Mercado inexistente!')
 	return (braga,doit)
+
+
+#______Sistema de fuga_______________
+
+def fugir():
+	global itemPeca
+	print('''
+	****BEM VINDO***
+
+	Escolha um modo de fuga
+
+	1. Jangada
+	2. Planador
+	3. Balao
+	4. Navio
+
+	''')
+	num  = input('\t ~> ')
+	num  = floatConversor(num)
+	clear()
+	if num == 1:
+		global pecas1
+	elif num == 2:
+		global pecas2
+	elif num == 3:
+		global pecas3
+	elif num == 4:
+		global pecas4
+	else:
+		print('\n[ERROR] - Modo de fuga inexistente!')
+
+
+
+def tentativaFuga(inventario, pecasNecess, numPecas):
+	nomes = [nome[0] for nome in inventario]
+	conta = sum(1 for chave in nomes if chave in pecasNecess)
+
+	if conta == numPecas:
+		# TENTANDO BASEADO NA TAXA DE SUCESSO DO MEIO DE TRANSPORTE
+		print()
+	else:
+		print('Quantidade de pecas insuficiente para uma fuga')
 
 #______Sistema de sobrevivencia_______
 
@@ -364,7 +487,6 @@ def alimentacao():
 		ultA = list(itemKilo.keys())[-1]
 		ultK = itemKilo[ultA]
 		size = len(itemKilo)
-
 
 		if size > 0:
 			if ultK > 0.5:
@@ -381,7 +503,7 @@ def alimentacao():
 		else:
 			vida = 0
 			print('\n\n\t[NAO SOBREVIVEU]\n\n')
-			exit()
+			encerramento()
 	return vida
 
 
@@ -391,5 +513,5 @@ def alimentacao():
 
 
 def encerramento():
-	print('\n\tObrigado pela atenção...\nEssa área está passando por ajustes... lol\n')
+	print('\n\t...FIM DE JOGO...\nSeja mais forte da proxima vez... lol\n')
 	exit()
