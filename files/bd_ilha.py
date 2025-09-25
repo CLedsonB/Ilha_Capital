@@ -5,10 +5,10 @@ from bugs_ilha import *
 from random import randrange as rand
 clear = lambda: os.system('cls' if os.name == 'nt' else 'clear')
 
-braga = 500
-doit = 500
+braga = 5000
+doit = 5000
 dias = 1
-vida = 5
+vida = 10
 itemKilo = {}
 itemUnidade = {}
 itemPeca = {}
@@ -291,6 +291,7 @@ encotra disponivel para uso. Bom proveito\n
 def transacao(lista,moeda,varejo):
 	global SIM,NAO
 	lista.sort()
+	clear()
 
 	while True:
 		clear()
@@ -311,7 +312,7 @@ def transacao(lista,moeda,varejo):
 			produto = int(input('Insira o número do produto\n ~> '))
 		except:
 			print('[ERROR] - Não dá pra trabalha com esse valor (0_0)')
-			break
+			return (lista, moeda, varejo)
 		if produto > len(lista):
 			print('\n[ERROR] - Número inválido (0.0)\n')
 			break
@@ -326,7 +327,7 @@ def transacao(lista,moeda,varejo):
 				quantidade = int(quantidade)
 		except:
 			print('\n[ERROR] - Não posso trabalhar com esse valor [-__-]')
-			break
+			return (lista, moeda, varejo)
 		subtotal = lista[produto-1][1] * quantidade
 		subtotal = round(subtotal,2)
 		if len(lista) == len(alimento):
@@ -359,6 +360,7 @@ def transacao(lista,moeda,varejo):
 def transacaoPecas(lista, moeda, varejo):
 	global SIM, NAO
 	codigo = []
+	clear()
 
 	print('\tSaldo : ',moeda,' D$\n')
 	for i in range(3):
@@ -372,6 +374,8 @@ def transacaoPecas(lista, moeda, varejo):
 		produto = int(input('Insira o número do produto\n ~> '))
 	except:
 		print('[ERROR] - Não dá pra trabalha com esse valor (0_0)')
+		return (lista, moeda, varejo)
+
 	if produto > len(lista):
 		print('\n[ERROR] - Número inválido (U_U)>|_| COOFFE PLEASSE\n')
 	elif produto == 0:
@@ -420,7 +424,6 @@ def compras():
 	''')
 	mercado = input('\t ~> ')
 	mercado = floatConversor(mercado)
-	clear()
 	if mercado == 1:
 		global joia
 		joia,doit,itemUnidade = transacao(joia,doit,itemUnidade)
@@ -434,7 +437,7 @@ def compras():
 		global pecas
 		pecas,doit,itemPeca = transacaoPecas(pecas,doit,itemPeca)
 	else:
-		print('\n[ERROR] - Mercado inexistente!')
+		print('\n[ERROR] - Mercado inexistente! :-/ ')
 	return (braga,doit)
 
 
@@ -455,22 +458,26 @@ def fugir():
 	''')
 	num  = input('\t ~> ')
 	num  = floatConversor(num)
-	clear()
 	if num == 1:
 		global pecas1
+		itemPeca = tentativaFuga(itemPeca,pecas1,9)
 	elif num == 2:
 		global pecas2
+		itemPeca = tentativaFuga(itemPeca,pecas2,7)
 	elif num == 3:
 		global pecas3
+		itemPeca = tentativaFuga(itemPeca,pecas3,5)
 	elif num == 4:
 		global pecas4
+		itemPeca = tentativaFuga(itemPeca,pecas4,3)
 	else:
 		print('\n[ERROR] - Modo de fuga inexistente!')
 
 
-def tentativaFuga(inventario, pecasNecess, numPecas, taxa):
+def tentativaFuga(inventario, pecasNecess, taxa):
 	nomes = [nome[0] for nome in inventario]
 	conta = sum(1 for chave in nomes if chave in pecasNecess)
+	numPecas = len(pecasNecess)
 
 	if conta == numPecas:
 		# TENTANDO BASEADO NA TAXA DE SUCESSO DO MEIO DE TRANSPORTE
@@ -484,7 +491,9 @@ def tentativaFuga(inventario, pecasNecess, numPecas, taxa):
 			print('fuga bem sucedida')
 			# FUGA BEM SUCEDIDA
 	else:
-		print('Quantidade de pecas insuficiente para uma fuga')
+		print('\nQuantidade de pecas insuficiente para uma fuga')
+
+	return (inventario)
 
 #______Sistema de sobrevivencia_______
 

@@ -19,9 +19,9 @@ você acumula dinheiro para fugir.\n
 ''')
 
 nome = input('Insira o seu nome : ')
-clear()
 
 while True:
+	clear()
 	barra = []
 	for i in range(10):
         	p = ('x','o')[i < vida]
@@ -96,6 +96,7 @@ while True:
 
 	elif opc == 7:
 		fugir()
+		limpar(2)
 	elif opc == 8:
 		encerramento()
 	elif opc == 34:
