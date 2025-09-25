@@ -7,7 +7,7 @@
 from bd_ilha import *
 clear()
 
-print('\t***Bem vindo a ilha capital***\n')
+print('\n\n\t***Bem vindo a ilha capital***\n')
 print('''
 Você estava em um navio que afundou,
 após dias cercado de água por todos os lados
@@ -18,11 +18,21 @@ essa ilha naturalmente, como única saida
 você acumula dinheiro para fugir.\n
 ''')
 
+nome = input('Insira o seu nome : ')
+clear()
+
 while True:
+	barra = []
+	for i in range(10):
+        	p = ('x','o')[i < vida]
+        	barra.append(p)
+	barra = ' '.join(map(str,barra))
+
 	print(f'''
-						 Dia : {dias}
-						Vida : {vida}
-	--Digite um dos numeros a seguir:
+					 Dia : {dias}
+					Vida : [ {barra} ]
+
+    -- Digite um dos numeros a seguir, {nome} :
 
 	1 - Consultar Saldo
 	2 - Ganhar Doits
@@ -42,7 +52,16 @@ while True:
 
 	clear()
 	if opc == 1:
-		print('\n\tSaldo:\n\t %.2f D$ (Doits)\n\t %.2f B$ (Bragas)' %(doit,braga))
+		titulo = 'SALDO BANCARIO'.center(5,' ')
+		print(f'''
+	 __________________________
+	|   {titulo}
+	|
+	|   {doit:.2f} D$
+	|   {braga:.2f} B$
+	|__________________________
+		''')
+#		print('\n\tSaldo:\n\t %.2f D$ (Doits)\n\t %.2f B$ (Bragas)' %(doit,braga))
 		limpar(3)
 	elif opc == 2:
 		doit = ganharDoits()
