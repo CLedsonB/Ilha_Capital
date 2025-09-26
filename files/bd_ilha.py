@@ -13,7 +13,7 @@ vida = 10
 falha = 0
 itemKilo = {}
 itemUnidade = {}
-itemPeca = {}
+itemPeca = {'Paubique':2,'Mastro P':3,'Toras':1,'Quilha':2}
 
 
 SIM = ['SIM','Sim','sim','s','S']
@@ -38,6 +38,24 @@ nome = [
 'Alice','Mario','Vitor','Beatriz',
 'Iago','Matias','Amanda','Elias',
 'Joana','Renata','Gabriel','Humberto'
+]
+
+pais = [
+'Argentina','Australia','Belgica','Brasil','Canada',
+'China','Egito','Franca','Alemanha','Grecia',
+'Mexico','India','Italia','Japao','Nigeria',
+'Paquistao','Russia','Polonia','Ucrania','Arabia Saudita',
+'Espanha','Tailandia','Angola','Bangladesh','Colombia',
+'Turquia','Indonesia','Holanda','Portugal','Israel',
+'Venezuela','Chile','Filipinas','Romania'
+]
+
+comida = [
+'Rabanada','Polenta','Risole','Strogonofe','Coxinha',
+'Moqueca','Quiabada','Feijoada','Lasanha','Passarinha',
+'Bisteca','Peixada','Churrasco','Picanha','Sopa',
+'Frango','Figado','Abobrinha','Lasanha','Hamburguer',
+'Polvilho'
 ]
 
 #Compras e vendas somente com doits
@@ -120,21 +138,17 @@ pecas3 = [t for i,t in enumerate(pecas) if i >= 8  and i <= 14]
 pecas4 = [t for i,t in enumerate(pecas) if i >= 15 and i <= 23]
 
 
-#Transforma todas as primeiras letras
-#da frase em Maiusculas
-
-#def maiuscula(frase):
-#	novaPalavra = " "
-#	frase = frase.split(" ")
-#	for palavra in frase:
-#		novaPalavra = novaPalavra + palavra.capitalize() + ' '
-#	return novaPalavra
-
 def limpar(seg):
 	input('\nPressione [ENTER] para continuar...\n')
 	print('\n\t...limpando tela...')
 	t.sleep(seg)
 	clear()
+
+def contarDias():
+	global dias
+	dias += 1
+	return dias
+
 
 #_______Converte strings e inteiros____
 #em float
@@ -159,7 +173,7 @@ def floatConversor(s):
 			print('\n[ERROR] - ALGO INESPERADO ACONTECEU [V_V]')
 		return total
 	except:
-		return print('[ERROR] - Não é um número')
+		return print('\n[ERROR] - Não é um número <-_x>  ')
 
 def intro():
 	global usuario
@@ -212,66 +226,159 @@ def exibirItens():
 #_______Acerte calculos e ganhe doits______
 def ganharDoits():
 	global doit
-	premio, soma = 0,0
-	print('\n\tResponda aos calculos e ganhe Doits!!!\n')
+	print('''
+	Responda aos calculos e ganhe Doits!!!
+
+	[1]. Adicao / Soma
+	[2]. Subtracao
+	[3]. Multiplicacao
+	[4]. Divisao
+	[5]. Aleatorio
+''')
 	try:
-		for num in range(5):
-			valor1 = rand(30) + 1
-			valor2 = rand(30) + 1
-			operador = rand(4) + 1
+		ope = int(input('\n ~> '))
 
-			if operador == 1:
-				print(valor1,' + ',valor2)
-				valor = input(' ~> ')
-				resp = valor1 + valor2
-			elif operador == 2:
-				print(valor1,' - ',valor2)
-				valor = input(' ~> ')
-				resp = valor1 - valor2
-			elif operador == 3:
-				print(valor1,' * ',valor2)
-				valor = input(' ~> ')
-				resp = valor1 * valor2
-			elif operador == 4:
-				print(valor1,' / ',valor2)
-				valor = input(' ~> ')
-				resp = valor1 / valor2
+		print('''
+	Escolha o nivel de dificuldade ('o')
+	Premios aumentam de acordo a dificuldade ($.$)
 
-			valor= floatConversor(valor)
-			premio = (rand(100)+1) / 10  # [1,10]
+			Numeros  |  Premios
+	[1]. Facil      [1,10]   |   [1,10]   D$
+	[2]. Medio      [10,50]  |   [6,26]   D$
+	[3]. Dificil    [50,100] |   [50,150] D$
 
-			if valor == resp:
-				soma += premio
-				print('\n\tParabéns!!! Você ganhou',premio,'D$\n')
-			elif valor == 99:
-				bug99()
-				break
-			elif valor == 91625:
-				bugDoit()
-				soma += 100
-			else:
-				soma -= premio
-				print('\n\t[ERROR] (!_!) Você perdeu',premio,'D$\n\tRESPOSTA: ',resp,'\n')
-		print("---- Balanço final : %.2f D$ ----\n" %(soma))
-		doit += soma
-		print('\nFIM DA PARTIDA\n')
+''')
+		nivel = int(input('\n ~> '))
+
+		if ope >= 1 and ope <= 5:
+			doit = calcular(ope,nivel)
+		else:
+			print('[ERROR] - Valor invalido E|-|.|-|3 ')
 	except:
 		print('\n[ERROR] - (>.<) Algo de errado não está certo...\nSeu saldo não foi afetado\n')
 	return doit
 
+def calcular(ope,nivel):
+	global doit
+	premio, soma = 0,0
+	clear()
+
+	if nivel == 1:
+		x1, x2 = 10, 1   # [1,10]
+		p1, p2 = 1, 10   # [1,10]
+	elif nivel == 2:
+		x1, x2 = 40, 10  # [10,50]
+		p1, p2 = 30, 5   # [6,26]
+	elif nivel == 3:
+		x1, x2 = 50, 50  # [50,100]
+		p1, p2 = 50, 1   # [50,150]
+
+	for i in range(5):
+		valor1 = rand(x1) + x2
+		valor2 = rand(x1) + x2
+		premio = (rand(100)+p1) / p2
+		if ope == 1:
+			print(valor1,' + ',valor2)
+			resp = valor1 + valor2
+		elif ope == 2:
+			print(valor1,' - ',valor2)
+			resp = valor1 - valor2
+		elif ope == 3:
+			print(valor1,' * ',valor2)
+			resp = valor1 * valor2
+		elif ope == 4:
+			print(valor1,' / ',valor2)
+			resp = valor1 / valor2
+		elif ope == 5:
+			operador = rand(4) + 1
+
+			if operador == 1:
+				print(valor1,' + ',valor2)
+				resp = valor1 + valor2
+			elif operador == 2:
+				print(valor1,' - ',valor2)
+				resp = valor1 - valor2
+			elif operador == 3:
+				print(valor1,' * ',valor2)
+				resp = valor1 * valor2
+			elif operador == 4:
+				print(valor1,' / ',valor2)
+				resp = valor1 / valor2
+
+		valor = input(' ~> ')
+		valor = floatConversor(valor)
+
+		if valor == resp:
+			soma += premio
+			print('\n\tParabéns!!! Você ganhou',premio,'D$\n')
+		elif valor == 0:
+			bug99()
+			break
+		elif valor == 91625:
+			bugDoit()
+			soma += 100
+		else:
+			soma -= premio
+			print('\n\t[ERROR] (!_!) Você perdeu',premio,'D$\n\tRESPOSTA: ',resp,'\n')
+
+	print("---- Balanço final : %.2f D$ ----\n" %(soma))
+	doit += soma
+	print('\nFIM DA PARTIDA\n')
+
+	return doit
+
 #_____Acerte os nomes e ganhe bragas_____
 def ganharBragas():
-	global nome, braga
+	global braga
 	soma = 0
-	print('\nDescubra o nome e ganhe Bragas!!\n')
-	print('-Não se precupe com acentos e simbolos-\n')
+	print('''
+	Descubra a palavra escondida e ganhe Bragas!!!
+	>> Nao precisa considerar acentos e pontuacao <<
+
+	    Categoria |  Premios
+	[1]. Nomes    |  [1,10]   B$
+	[2]. Paises   |  [10,50]  B$
+	[3]. Comida   |  [50,100] B$
+''')
+	try:
+		ope = int(input('\n ~> '))
+
+		if ope >= 1 and ope <= 3:
+			braga = cifraBraga(ope)
+		else:
+			print('[ERROR] - Valor invalido (>"o"<) ')
+	except:
+		print('\n[ERROR] - (>.<) Algo de errado não está certo...\nSeu saldo não foi afetado\n')
+	return braga
+
+
+def cifraBraga(ope):
+	global braga
+	premio, soma = 0, 0
+	clear()
+
+	if ope == 1:
+		global nome
+		p1, p2 = 10, 1
+		categ = nome
+	elif ope == 2:
+		global pais
+		p1, p2 = 40, 11
+		categ = pais
+	elif ope == 3:
+		global comida
+		p1, p2 = 50, 51
+		categ = comida
+
 	for num in range(5):
-		premio = (rand(100)+1) / 10 #[1,10]
-		local = nome[rand(len(nome))]
+		premio = rand(p1) + p2
+		local = categ[rand(len(categ))]
 		lacunas = local.replace(local[rand(len(local))],'_')
 		lacunas2 = lacunas.replace(local[rand(len(local))],'_')
+
 		print('  [',lacunas2,']')
 		nomeX = input("\n ~> ")
+
 		if nomeX.capitalize() == local:
 			soma += premio
 			print('\n\tParabéns!! Você ganhou',premio,'B$\n')
@@ -284,6 +391,7 @@ def ganharBragas():
 		else:
 			soma -= premio
 			print('\n\t[ERROR] |_(>.<)_| Você perdeu',premio,'B$\n\tRESPOSTA:', local,'\n')
+
 	print("---- Balanço final : %.2f B$ ----\n" %(soma))
 	braga += soma
 	print('\nFIM DA PARTIDA\n')
@@ -341,7 +449,7 @@ encotra disponivel para uso. Bom proveito\n
 		else:
 			print('\nTODO ERRADO - Número sem utilidade\n')
 	except:
-		print('\n[ERROR] - Não é um número _ _(0_0)_ /. ')
+		print('\n[ERROR] - Não é um número E_ _(0_0)_ /. ')
 	return (braga,doit)
 
 #Suporte da funcao compras()
@@ -383,7 +491,7 @@ def transacao(lista,moeda,varejo):
 			elif len(lista) != len(alimento):
 				quantidade = int(quantidade)
 		except:
-			print('\n[ERROR] - Não posso trabalhar com esse valor [-__-]')
+			print('\n\t[ERROR] - Não posso trabalhar com esse valor [-__-]')
 			return (lista, moeda, varejo)
 		subtotal = lista[produto-1][1] * quantidade
 		subtotal = round(subtotal,2)
@@ -397,7 +505,7 @@ def transacao(lista,moeda,varejo):
 			if SIM.count(confirmar) == 1:
 				if moeda >= subtotal:
 					moeda -= subtotal
-					print('\tCompra concluída $$')
+					print('\t$$  Compra concluída  $$')
 					try:
 						varejo[lista[produto-1][0]] += quantidade
 					except:
@@ -447,13 +555,11 @@ def transacaoPecas(lista, moeda, varejo):
 			if SIM.count(confirmar) == 1:
 				if moeda >= valor:
 					moeda -= valor
-					print('\tCompra concluída $$')
+					print('\t$$  Compra concluída  $$')
 					try:
 						varejo[item] += 1
-#						varejo[lista[produto-1][0]] += 1
 					except:
 						varejo[item] = 1
-#						varejo[lista[produto-1][0]] = 1
 				else:
 					print('\tVocê não tem saldo suficiente :(')
 			elif NAO.count(confirmar) == 1:
@@ -560,9 +666,14 @@ def tentativaFuga(pecasM, pecasN, taxa,metodo):
 			indice = rand(100) + 1
 			if indice > chanceFuga:
 				print('\n\t\tFUGA MAU SUCEDIDA\n\tVoce perdeu as pecas do seu meio de transporte [~.~]')
-				mod = {n:v for n,v in pecasM.items() if n not in nomesPn}
+				for nome in nomesPn:
+					if pecasM[nome] > 1:
+						pecasM[nome] -= 1
+					else:
+						pecasM.pop(nome)
+#				mod = {n:v for n,v in pecasM.items() if n not in nomesPn}
 				falha += 1
-				return (mod, falha)
+				return (pecasM, falha)
 			else:
 				print('\n\t\tFUGA BEM SUCEDIDA !!!\n\tNos nao desistimos (*_*)...|_| UM BRINDE\n')
 				status()

@@ -82,4 +82,4 @@ while True:
 			limpar(2)
 
 	vida = alimentacao()
-	dias += 1
+	dias = contarDias()
