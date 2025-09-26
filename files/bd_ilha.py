@@ -5,13 +5,17 @@ from bugs_ilha import *
 from random import randrange as rand
 clear = lambda: os.system('cls' if os.name == 'nt' else 'clear')
 
+usuario = ''
 braga = 5000
 doit = 5000
 dias = 1
 vida = 10
+falha = 0
 itemKilo = {}
 itemUnidade = {}
-itemPeca = {}
+itemPeca = {'Mastro P': 1, 'Paubique': 1, 'Toras': 1, 'Vela': 1, 'Quilha': 1}
+
+
 SIM = ['SIM','Sim','sim','s','S']
 NAO = ['NÃO','Não','N','não','n','nao']
 
@@ -91,40 +95,29 @@ alimento = [
 ]
 
 pecas = [
-('Mastro P',50),
-('Paubique',35),
-('Toras',20),
+('Mastro P',50),('Paubique',35),('Toras',20),
 # JANGADA 0 - 2
-('Vela',30),
-('Quilha',20),
-('Trapezio',100),
-('Cordas de controle',35),
-('Estrutura de sustentacao',80),
+('Vela',30),('Quilha',20),('Trapezio',100),
+('Cordas de controle',35),('Estrutura de sustentacao',80),
 # ASA DELTA 3 - 7
-('Envoltorio',50),
-('Cesto',35),
-('Queimador',70),
-('Tanque de propano',120),
-('Cordas de suspensao',40),
-('Valvula de parachute',60),
+('Envoltorio',50),('Cesto',35),
+('Queimador',70),('Tanque de propano',120),
+('Cordas de suspensao',40),('Valvula de parachute',60),
 ('Altimetro',100),
 # BALAO 8 - 14
-('Casco',35),
-('Proa',40),
-('Popa',50),
-('Conves',120),
-('Leme',80),
-('Helice',90),
-('Mastro G',40),
-('Ancora',60),
-('Ponte de comando',120),
+('Casco',35),('Proa',40),
+('Popa',50),('Conves',120),
+('Leme',80),('Helice',90),
+('Mastro G',40),('Ancora',60),
+('Ponte de comando',120)
 # NAVIO 15 - 23
 ]
+metodoFuga = [['Jangada',3],['Planador',5],['Balao',7],['Navio',9]]
 
-pecas1 = [tupla for indice, tupla in enumerate(pecas) if indice <= 2 ]
-pecas2 = [tupla for indice, tupla in enumerate(pecas) if indice >= 3 and indice <= 7]
-pecas3 = [tupla for indice, tupla in enumerate(pecas) if indice >= 8 and indice <= 14]
-pecas4 = [tupla for indice, tupla in enumerate(pecas) if indice >= 15 and indice <= 23]
+pecas1 = [t for i,t in enumerate(pecas) if i <= 2 ]
+pecas2 = [t for i,t in enumerate(pecas) if i >= 3  and i <= 7]
+pecas3 = [t for i,t in enumerate(pecas) if i >= 8  and i <= 14]
+pecas4 = [t for i,t in enumerate(pecas) if i >= 15 and i <= 23]
 
 
 #Transforma todas as primeiras letras
@@ -168,6 +161,40 @@ def floatConversor(s):
 	except:
 		return print('[ERROR] - Não é um número')
 
+def intro():
+	global usuario
+	print('''
+	*** Bem vindo a Ilha Capital ***
+
+	Voce estava em um navio que afundou,
+	apos dias cercado de agua por todos os lados
+	voce foi encontrado desacordado, a ilha possui
+	um bom desenvolvimento tecnologico, a questao e
+	que voce esta preso, ninguem consegue acessar essa
+	essa ilha naturalmente, como unica saida voce acumula
+	recursos para fugir.
+''')
+	usuario = input('Insira o seu nome : ')
+	return usuario
+
+def exibirItens():
+	global itemKilo, itemUnidade, itemPeca
+	inventario = ['Alimentos','Objetos','Pecas']
+	clear()
+	i = 0
+	for nome in inventario:
+		print(inventario[i].center(15,'_'))
+		print()
+		if nome == inventario[0]:
+			for key in itemKilo.keys():
+				print(' ~> ',key,' : ',itemKilo[key],'Kgs' if itemKilo[key] > 1 else 'Kg')
+		elif nome == inventario[1]:
+			for key in itemUnidade.keys():
+				print(' ~> ',key,' : ',itemUnidade[key],'Unidades' if itemUnidade[key] > 1 else 'Unidade')
+		elif nome == inventario[2]:
+			for key in itemPeca.keys():
+				print(' ~> ',key,' : ',itemPeca[key],'Unidades' if itemPeca[key] > 1 else 'Unidade')
+		i += 1
 
 #_______Acerte calculos e ganhe doits______
 def ganharDoits():
@@ -284,7 +311,7 @@ encotra disponivel para uso. Bom proveito\n
 		else:
 			print('\nTODO ERRADO - Número sem utilidade\n')
 	except:
-		print('\n[ERROR] - Não é um número .\ _(0_0)_ /. ')
+		print('\n[ERROR] - Não é um número _ _(0_0)_ /. ')
 	return (braga,doit)
 
 #Suporte da funcao compras()
@@ -335,7 +362,7 @@ def transacao(lista,moeda,varejo):
 		else:
 			print('\n',lista[produto-1][0],'.....',quantidade,'Unidades' if quantidade > 1 else 'Unidade',' = ', subtotal,'D$\n')
 		while True:
-			confirmar = input('Confirme a compra com sim ou nao\n ~> ')
+			confirmar = input('Confirme a compra ( sim / nao )\n ~> ')
 			print('\n')
 			if SIM.count(confirmar) == 1:
 				if moeda >= subtotal:
@@ -385,7 +412,7 @@ def transacaoPecas(lista, moeda, varejo):
 		valor = lista[produto-1][1]
 		print('\n',item,'..... 1 Unidade = ',valor,'D$\n')
 		while True:
-			confirmar = input('Confirme a compra com sim ou nao\n ~> ')
+			confirmar = input('Confirme a compra ( sim / nao )\n ~> ')
 			print('\n')
 			if SIM.count(confirmar) == 1:
 				if moeda >= valor:
@@ -393,8 +420,10 @@ def transacaoPecas(lista, moeda, varejo):
 					print('\tCompra concluída $$')
 					try:
 						varejo[item] += 1
+#						varejo[lista[produto-1][0]] += 1
 					except:
 						varejo[item] = 1
+#						varejo[lista[produto-1][0]] = 1
 				else:
 					print('\tVocê não tem saldo suficiente :(')
 			elif NAO.count(confirmar) == 1:
@@ -444,56 +473,77 @@ def compras():
 #______Sistema de fuga_______________
 
 def fugir():
-	global itemPeca
+	global itemPeca, falha, metodoFuga
+
 	print('''
 	****BEM VINDO***
 
-	Escolha um modo de fuga
+	Escolha um modo de fuga :
+''')
+	i = 1
+	for k,v in metodoFuga:
+		print(f'\t[{i}]. {k}\t( {v} pecas )')
+		i += 1
 
-	1. Jangada
-	2. Planador
-	3. Balao
-	4. Navio
-
-	''')
-	num  = input('\t ~> ')
+	num  = input('\n\t ~> ')
 	num  = floatConversor(num)
 	if num == 1:
 		global pecas1
-		itemPeca = tentativaFuga(itemPeca,pecas1,9)
+		itemPeca, falha = tentativaFuga(itemPeca,pecas1,9,metodoFuga[0])
 	elif num == 2:
 		global pecas2
-		itemPeca = tentativaFuga(itemPeca,pecas2,7)
+		itemPeca, falha = tentativaFuga(itemPeca,pecas2,7,metodoFuga[1])
 	elif num == 3:
 		global pecas3
-		itemPeca = tentativaFuga(itemPeca,pecas3,5)
+		itemPeca, falha = tentativaFuga(itemPeca,pecas3,5,metodoFuga[2])
 	elif num == 4:
 		global pecas4
-		itemPeca = tentativaFuga(itemPeca,pecas4,3)
+		itemPeca, falha = tentativaFuga(itemPeca,pecas4,3,metodoFuga[3])
 	else:
 		print('\n[ERROR] - Modo de fuga inexistente!')
 
+	return itemPeca
 
-def tentativaFuga(inventario, pecasNecess, taxa):
-	nomes = [nome[0] for nome in inventario]
-	conta = sum(1 for chave in nomes if chave in pecasNecess)
-	numPecas = len(pecasNecess)
+def tentativaFuga(pecasM, pecasN, taxa,metodo):
+	global falha
+	nomesPm = [nome for nome in pecasM]
+	nomesPn = [nome for nome,valor in pecasN]
+	conta = sum(1 for c in nomesPm if c in nomesPn)
+	numPecas = len(nomesPn)
 
-	if conta == numPecas:
-		# TENTANDO BASEADO NA TAXA DE SUCESSO DO MEIO DE TRANSPORTE
-		chanceFuga = 1 / taxa  * 100
-		indice = rand(100) + 1
-		if indice > chanceFuga:
-            		print('Fuga mau sucedida')
-			# NAO CONSEGIU
-			# REMOVER 1 UNIDADE DE CADA PECA
+	print(f'''
+	Metodo de fuga : {metodo[0]}
+	Taxa de sucesso inicial : {round(1/taxa*100,2)} %
+	Numero de pecas necessarias : {metodo[1]}
+
+	Pecas necessarias,segue abaixo...
+''')
+	for nome in nomesPn:
+		print('\t1 x ',nome)
+
+	opc = input('\n\tDeseja continuar ? (sim / nao) : ')
+
+	if SIM.count(opc) == 1:
+		if conta == numPecas:
+			# TENTANDO BASEADO NA TAXA DE SUCESSO DO MEIO DE TRANSPORTE
+			chanceFuga = round(1 / taxa  * 100,2)
+			indice = rand(100) + 1
+			if indice > chanceFuga:
+				print('\n\t\tFUGA MAU SUCEDIDA\n\tVoce perdeu as pecas do seu meio de transporte [~.~]')
+				mod = {n:v for n,v in pecasM.items() if n not in nomesPn}
+				falha += 1
+				return (mod, falha)
+			else:
+				print('\n\t\tFUGA BEM SUCEDIDA !!!\n\tNos nao desistimos (*_*)...|_| UM BRINDE\n')
+				status()
 		else:
-			print('fuga bem sucedida')
-			# FUGA BEM SUCEDIDA
+			print('\nQuantidade de pecas insuficiente para uma fuga')
+	elif NAO.count(opc) == 1:
+		print('\n\tTentativa cancelada, seu fraco\n\tCom certeza se tremeu de medo :-O ')
 	else:
-		print('\nQuantidade de pecas insuficiente para uma fuga')
+		print('\n\t[ERROR] - Comando invalido, tente novamente (0.0) ')
 
-	return (inventario)
+	return (pecasM, falha)
 
 #______Sistema de sobrevivencia_______
 
@@ -531,4 +581,21 @@ def alimentacao():
 
 def encerramento():
 	print('\n\t...FIM DE JOGO...\nSeja mais forte da proxima vez... lol\n')
+	exit()
+
+def status():
+	print(f'''
+     _____________________________
+     |
+     |   Nome : {usuario}
+     |   Dias : {dias}
+     |   Vida : {vida}
+     |
+     |   Doits : {doit}
+     |   Braga : {braga}
+     |
+     |   N* de Tentativas : {falha}
+     |
+     |____________________________
+''')
 	exit()

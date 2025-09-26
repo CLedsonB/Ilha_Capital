@@ -10,14 +10,13 @@ def bug991():
 \tEntão seu bostinha
 \tfazendo manutenção de novo?? \_(0_0)_/
 ''')
-		
 
 def bugDoit():
 	print('''
 \tOs numeros quadrados te troxeram aqui
 \t nunca os abadone...
 
-+100 doits
+\t+100 doits
 ''')
 
 def bugBraga():
@@ -41,4 +40,4 @@ def bugImagem():
 ⠄⠄⠄⠄⠄⠄⠄⠉⠻⣿⣿⣾⣦⡙⠻⣷⣾⣿⠃⠿⠋⠁⠄⠄⠄⠄⠄⢀⣠⣴
 ⣿⣿⣿⣶⣶⣮⣥⣒⠲⢮⣝⡿⣿⣿⡆⣿⡿⠃⠄⠄⠄⠄⠄⠄⠄⣠⣴⣿⣿⣿
 		''')
-	print('\n\tAutor : CLedson\n')
+	print('\n\tGithub : CLedsonB\n')
