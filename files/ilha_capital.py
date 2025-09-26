@@ -34,8 +34,6 @@ while True:
 	8 - Desistir
 	''')
 
-	print(itemPeca)
-
 	try:
 		opc = ''
 		opc = int(input(' ~> '))
@@ -44,16 +42,7 @@ while True:
 		print('\n[ERROR] - Não é um número (o_O)')
 
 	if opc == 1:
-		clear()
-		titulo = 'SALDO BANCARIO'.center(5,' ')
-		print(f'''
-	 __________________________
-	|   {titulo}
-	|
-	|   {doit:.2f} D$
-	|   {braga:.2f} B$
-	|__________________________
-		''')
+		exibirSaldo()
 		limpar(3)
 	elif opc == 2:
 		clear()

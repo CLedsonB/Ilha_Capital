@@ -13,7 +13,7 @@ vida = 10
 falha = 0
 itemKilo = {}
 itemUnidade = {}
-itemPeca = {'Mastro P': 1, 'Paubique': 1, 'Toras': 1, 'Vela': 1, 'Quilha': 1}
+itemPeca = {}
 
 
 SIM = ['SIM','Sim','sim','s','S']
@@ -177,6 +177,19 @@ def intro():
 	usuario = input('Insira o seu nome : ')
 	return usuario
 
+def exibirSaldo():
+	global doit, braga
+	titulo = 'SALDO BANCARIO'.center(5,' ')
+	print(f'''
+	_________________________
+	| {titulo}
+	|
+	| {doit:.2f} D$
+	| {braga:.2f} B$
+	|
+	-------------------------
+''')
+
 def exibirItens():
 	global itemKilo, itemUnidade, itemPeca
 	inventario = ['Alimentos','Objetos','Pecas']
@@ -205,12 +218,29 @@ def ganharDoits():
 		for num in range(5):
 			valor1 = rand(30) + 1
 			valor2 = rand(30) + 1
-			print(valor1,'+',valor2)
-			valor = input(' ~> ')
-			valor = floatConversor(valor)
-			premio = (rand(100)+1) / 10 #[1,10]
+			operador = rand(4) + 1
 
-			if valor == valor1+valor2:
+			if operador == 1:
+				print(valor1,' + ',valor2)
+				valor = input(' ~> ')
+				resp = valor1 + valor2
+			elif operador == 2:
+				print(valor1,' - ',valor2)
+				valor = input(' ~> ')
+				resp = valor1 - valor2
+			elif operador == 3:
+				print(valor1,' * ',valor2)
+				valor = input(' ~> ')
+				resp = valor1 * valor2
+			elif operador == 4:
+				print(valor1,' / ',valor2)
+				valor = input(' ~> ')
+				resp = valor1 / valor2
+
+			valor= floatConversor(valor)
+			premio = (rand(100)+1) / 10  # [1,10]
+
+			if valor == resp:
 				soma += premio
 				print('\n\tParabéns!!! Você ganhou',premio,'D$\n')
 			elif valor == 99:
@@ -221,7 +251,7 @@ def ganharDoits():
 				soma += 100
 			else:
 				soma -= premio
-				print('\n\t[ERROR] (!_!) Você perdeu',premio,'D$\n\tRESPOSTA: ',valor1+valor2,'\n')
+				print('\n\t[ERROR] (!_!) Você perdeu',premio,'D$\n\tRESPOSTA: ',resp,'\n')
 		print("---- Balanço final : %.2f D$ ----\n" %(soma))
 		doit += soma
 		print('\nFIM DA PARTIDA\n')
