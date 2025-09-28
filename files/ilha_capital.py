@@ -8,9 +8,11 @@ from bd_ilha import *
 obs = False
 clear()
 
+carregamento()
 usuario = intro()
 
 while True:
+	carregamento()
 	clear()
 	barra = []
 	for i in range(10):

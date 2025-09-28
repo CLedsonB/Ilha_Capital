@@ -6,14 +6,14 @@ from random import randrange as rand
 clear = lambda: os.system('cls' if os.name == 'nt' else 'clear')
 
 usuario = ''
-braga = 5000
-doit = 5000
+braga = 0
+doit = 0
 dias = 1
-vida = 10
+vida = 5
 falha = 0
 itemKilo = {}
 itemUnidade = {}
-itemPeca = {'Paubique':2,'Mastro P':3,'Toras':1,'Quilha':2}
+itemPeca = {}
 
 
 SIM = ['SIM','Sim','sim','s','S']
@@ -137,6 +137,23 @@ pecas2 = [t for i,t in enumerate(pecas) if i >= 3  and i <= 7]
 pecas3 = [t for i,t in enumerate(pecas) if i >= 8  and i <= 14]
 pecas4 = [t for i,t in enumerate(pecas) if i >= 15 and i <= 23]
 
+
+def carregamento():
+	icone = [
+'       o ',
+'     o   o',
+'    o     o',
+'   o       o',
+'   o       o',
+'    o     o',
+'     o   o',
+'       o '
+]
+	clear()
+	print('\n\n')
+	for linha in icone:
+		print('\t\t',linha)
+		t.sleep(0.5)
 
 def limpar(seg):
 	input('\nPressione [ENTER] para continuar...\n')
@@ -671,7 +688,6 @@ def tentativaFuga(pecasM, pecasN, taxa,metodo):
 						pecasM[nome] -= 1
 					else:
 						pecasM.pop(nome)
-#				mod = {n:v for n,v in pecasM.items() if n not in nomesPn}
 				falha += 1
 				return (pecasM, falha)
 			else:
