@@ -149,11 +149,11 @@ def carregamento():
 '     o   o',
 '       o '
 ]
-	clear()
 	print('\n\n')
 	for linha in icone:
 		print('\t\t',linha)
 		t.sleep(0.5)
+	clear()
 
 def limpar(seg):
 	input('\nPressione [ENTER] para continuar...\n')
@@ -227,8 +227,9 @@ def exibirItens():
 	clear()
 	i = 0
 	for nome in inventario:
+		print('\n')
 		print(inventario[i].center(15,'_'))
-		print()
+		print('\n')
 		if nome == inventario[0]:
 			for key in itemKilo.keys():
 				print(' ~> ',key,' : ',itemKilo[key],'Kgs' if itemKilo[key] > 1 else 'Kg')
@@ -270,7 +271,7 @@ def ganharDoits():
 		if ope >= 1 and ope <= 5:
 			doit = calcular(ope,nivel)
 		else:
-			print('[ERROR] - Valor invalido E|-|.|-|3 ')
+			print('\n[ERROR] - Valor invalido E|-|.|-|3 ')
 	except:
 		print('\n[ERROR] - (>.<) Algo de errado não está certo...\nSeu saldo não foi afetado\n')
 	return doit
@@ -363,9 +364,9 @@ def ganharBragas():
 		if ope >= 1 and ope <= 3:
 			braga = cifraBraga(ope)
 		else:
-			print('[ERROR] - Valor invalido (>"o"<) ')
+			print('\n\t[ERROR] - Valor invalido (>"o"<) ')
 	except:
-		print('\n[ERROR] - (>.<) Algo de errado não está certo...\nSeu saldo não foi afetado\n')
+		print('\n\t[ERROR] - (>.<) Algo de errado não está certo...\nSeu saldo não foi afetado\n')
 	return braga
 
 
@@ -442,12 +443,12 @@ encotra disponivel para uso. Bom proveito\n
 			if d > doit:
 				print('\nVocê não tem tudo isso, meu caro (^_^)')
 			else:
-				convertido = d*1.6
+				convertido = round(d*1.6,2)
 				doit -= d
 				braga += convertido
-				print('\n%.2f D$ = %.2f B$' %(d,d*1.6))
+				print('\n%.2f D$ = %.2f B$' %(d,convertido))
 				print('\n\tProcessando solicitação...')
-				t.sleep(2)
+				carregamento()
 				print(msm)
 
 		elif num == 2:
@@ -456,17 +457,17 @@ encotra disponivel para uso. Bom proveito\n
 			if b > braga:
 				print('\nVocê não tem tudo isso, meu caro (v_V)')
 			else:
-				convertido = b*0.625
+				convertido = round(b*0.625,2)
 				braga -= b
 				doit += convertido
-				print('\n%.2f B$ = %.2f D$' %(b,b*0.625))
+				print('\n%.2f B$ = %.2f D$' %(b,convertido))
 				print('\n\tProcessando solicitação...')
-				t.sleep(2)
+				carregamento()
 				print(msm)
 		else:
 			print('\nTODO ERRADO - Número sem utilidade\n')
 	except:
-		print('\n[ERROR] - Não é um número E_ _(0_0)_ /. ')
+		print('\n\t[ERROR] - Não é um número E_ _(0_0)_ /. ')
 	return (braga,doit)
 
 #Suporte da funcao compras()
@@ -479,12 +480,12 @@ def transacao(lista,moeda,varejo):
 		clear()
 		i = 1
 		if len(lista) == len(alimento):
-			print('\tSaldo : ',moeda,' B$\n')
+			print('\tSaldo : ',round(moeda,2),' B$\n')
 			for (item,valor) in lista:
 				print(' ',i,'.',item,' = ',valor,'B$')
 				i += 1
 		else:
-			print('\tSaldo : ',moeda,' D$\n')
+			print('\tSaldo : ',round(moeda,2),' D$\n')
 			for (item,valor) in lista:
 				print (' ',i,'.',item,' = ',valor,'D$')
 				i += 1
@@ -493,10 +494,10 @@ def transacao(lista,moeda,varejo):
 		try:
 			produto = int(input('Insira o número do produto\n ~> '))
 		except:
-			print('[ERROR] - Não dá pra trabalha com esse valor (0_0)')
+			print('\n\t[ERROR] - Não dá pra trabalha com esse valor (0_0)')
 			return (lista, moeda, varejo)
 		if produto > len(lista):
-			print('\n[ERROR] - Número inválido (0.0)\n')
+			print('\n\t[ERROR] - Número inválido (0.0)\n')
 			break
 		if produto == 0:
 			print('\n\t<3 Volte sempre <3\n')
@@ -528,11 +529,11 @@ def transacao(lista,moeda,varejo):
 					except:
 						varejo[lista[produto-1][0]] = quantidade
 				else:
-					print('\t[ERROR] - Você não tem saldo suficiente :(')
+					print('\n\t[ERROR] - Você não tem saldo suficiente :(')
 			elif NAO.count(confirmar) == 1:
 				print('\tCompra cancelada, tente de novo\n\tnosso produtos são da melhor qualidade :D')
 			else:
-				print('\t[ERROR] - Comando invalido, tente novamente (0.0) ')
+				print('\n\t[ERROR] - Comando invalido, tente novamente (0.0) ')
 			t.sleep(2)
 			print('\n')
 			break
@@ -544,7 +545,7 @@ def transacaoPecas(lista, moeda, varejo):
 	codigo = []
 	clear()
 
-	print('\tSaldo : ',moeda,' D$\n')
+	print('\tSaldo : ',round(moeda,2),' D$\n')
 	for i in range(3):
 		num = rand(len(pecas))
 		codigo.append(num)
@@ -555,11 +556,11 @@ def transacaoPecas(lista, moeda, varejo):
 	try:
 		produto = int(input('Insira o número do produto\n ~> '))
 	except:
-		print('[ERROR] - Não dá pra trabalha com esse valor (0_0)')
+		print('\n\t[ERROR] - Não dá pra trabalha com esse valor (0_0)')
 		return (lista, moeda, varejo)
 
 	if produto > len(lista):
-		print('\n[ERROR] - Número inválido (U_U)>|_| COOFFE PLEASSE\n')
+		print('\n\t[ERROR] - Número inválido (U_U)>|_| COOFFE PLEASSE\n')
 	elif produto == 0:
 		print('\n\t<3 Volte sempre <3\n')
 	elif  produto-1 in codigo:
@@ -582,12 +583,12 @@ def transacaoPecas(lista, moeda, varejo):
 			elif NAO.count(confirmar) == 1:
 				print('\tCompra cancelada, tente de novo\n\tnosso produtos são da melhor qualidade :D')
 			else:
-				print('\t[ERROR] - Comando invalido, tente novamente ($_$)')
+				print('\n\t[ERROR] - Comando invalido, tente novamente ($_$)')
 			t.sleep(2)
 			print('\n')
 			break
 	else:
-		print('\n [ERROR] - Codigo invalido :~( RESFRIADO')
+		print('\n\t[ERROR] - Codigo invalido :~( RESFRIADO')
 	return (lista,moeda,varejo)
 
 #____Gaste aqui seu suado dinheiro____
@@ -619,7 +620,7 @@ def compras():
 		global pecas
 		pecas,doit,itemPeca = transacaoPecas(pecas,doit,itemPeca)
 	else:
-		print('\n[ERROR] - Mercado inexistente! :-/ ')
+		print('\n\t[ERROR] - Mercado inexistente! :-/ ')
 	return (braga,doit)
 
 
@@ -653,20 +654,28 @@ def fugir():
 		global pecas4
 		itemPeca, falha = tentativaFuga(itemPeca,pecas4,3,metodoFuga[3])
 	else:
-		print('\n[ERROR] - Modo de fuga inexistente!')
+		print('\n\t[ERROR] - Modo de fuga inexistente!')
 
 	return itemPeca
 
 def tentativaFuga(pecasM, pecasN, taxa,metodo):
-	global falha
+	global falha, dias
 	nomesPm = [nome for nome in pecasM]
 	nomesPn = [nome for nome,valor in pecasN]
 	conta = sum(1 for c in nomesPm if c in nomesPn)
 	numPecas = len(nomesPn)
-
+	if dias % 2 == 0 and (metodo[1] == 5 or metodo[1] == 7):
+		favoravel = 5
+		# + 5 % planador, balao
+	elif dias % 2 != 0 and (metodo[1] == 3 or metodo[1] == 9):
+		favoravel = 5
+		# + 5 % jangada, navio
+	else:
+		favoravel = 0
 	print(f'''
 	Metodo de fuga : {metodo[0]}
 	Taxa de sucesso inicial : {round(1/taxa*100,2)} %
+	Acrescimo do dia : + {favoravel} %
 	Numero de pecas necessarias : {metodo[1]}
 
 	Pecas necessarias,segue abaixo...
@@ -678,8 +687,9 @@ def tentativaFuga(pecasM, pecasN, taxa,metodo):
 
 	if SIM.count(opc) == 1:
 		if conta == numPecas:
+			carregamento()
 			# TENTANDO BASEADO NA TAXA DE SUCESSO DO MEIO DE TRANSPORTE
-			chanceFuga = round(1 / taxa  * 100,2)
+			chanceFuga = round(1 / taxa  * 100,2) + favoravel
 			indice = rand(100) + 1
 			if indice > chanceFuga:
 				print('\n\t\tFUGA MAU SUCEDIDA\n\tVoce perdeu as pecas do seu meio de transporte [~.~]')
