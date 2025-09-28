@@ -6,14 +6,14 @@ from random import randrange as rand
 clear = lambda: os.system('cls' if os.name == 'nt' else 'clear')
 
 usuario = ''
-braga = 0
-doit = 0
+braga = 1000
+doit = 1000
 dias = 1
-vida = 5
+vida = 10
 falha = 0
 itemKilo = {}
 itemUnidade = {}
-itemPeca = {}
+itemPeca = {'Paubique':2,'Toras': 2, 'Mastro P': 2}
 
 
 SIM = ['SIM','Sim','sim','s','S']
@@ -164,6 +164,7 @@ def limpar(seg):
 def contarDias():
 	global dias
 	dias += 1
+	print('\n\t + 1 DIA')
 	return dias
 
 
@@ -627,7 +628,7 @@ def compras():
 #______Sistema de fuga_______________
 
 def fugir():
-	global itemPeca, falha, metodoFuga
+	global itemPeca, falha, metodoFuga, vida
 
 	print('''
 	****BEM VINDO***
@@ -643,23 +644,23 @@ def fugir():
 	num  = floatConversor(num)
 	if num == 1:
 		global pecas1
-		itemPeca, falha = tentativaFuga(itemPeca,pecas1,9,metodoFuga[0])
+		itemPeca, falha, vida = tentativaFuga(itemPeca,pecas1,9,metodoFuga[0])
 	elif num == 2:
 		global pecas2
-		itemPeca, falha = tentativaFuga(itemPeca,pecas2,7,metodoFuga[1])
+		itemPeca, falha, vida = tentativaFuga(itemPeca,pecas2,7,metodoFuga[1])
 	elif num == 3:
 		global pecas3
-		itemPeca, falha = tentativaFuga(itemPeca,pecas3,5,metodoFuga[2])
+		itemPeca, falha, vida = tentativaFuga(itemPeca,pecas3,5,metodoFuga[2])
 	elif num == 4:
 		global pecas4
-		itemPeca, falha = tentativaFuga(itemPeca,pecas4,3,metodoFuga[3])
+		itemPeca, falha, vida = tentativaFuga(itemPeca,pecas4,3,metodoFuga[3])
 	else:
 		print('\n\t[ERROR] - Modo de fuga inexistente!')
 
 	return itemPeca
 
 def tentativaFuga(pecasM, pecasN, taxa,metodo):
-	global falha, dias
+	global falha, dias, vida
 	nomesPm = [nome for nome in pecasM]
 	nomesPn = [nome for nome,valor in pecasN]
 	conta = sum(1 for c in nomesPm if c in nomesPn)
@@ -692,14 +693,16 @@ def tentativaFuga(pecasM, pecasN, taxa,metodo):
 			chanceFuga = round(1 / taxa  * 100,2) + favoravel
 			indice = rand(100) + 1
 			if indice > chanceFuga:
-				print('\n\t\tFUGA MAU SUCEDIDA\n\tVoce perdeu as pecas do seu meio de transporte [~.~]')
+				print('\n\t\tFUGA MAU SUCEDIDA\n\tVoce perdeu 2 pontos de vida e as pecas do seu meio de transporte [~.~]')
 				for nome in nomesPn:
 					if pecasM[nome] > 1:
 						pecasM[nome] -= 1
 					else:
 						pecasM.pop(nome)
 				falha += 1
-				return (pecasM, falha)
+				vida -= 2
+				print('\n\t- 2 VIDAS')
+				return (pecasM, falha, vida)
 			else:
 				print('\n\t\tFUGA BEM SUCEDIDA !!!\n\tNos nao desistimos (*_*)...|_| UM BRINDE\n')
 				status()
@@ -710,7 +713,7 @@ def tentativaFuga(pecasM, pecasN, taxa,metodo):
 	else:
 		print('\n\t[ERROR] - Comando invalido, tente novamente (0.0) ')
 
-	return (pecasM, falha)
+	return (pecasM, falha, vida)
 
 #______Sistema de sobrevivencia_______
 
@@ -727,13 +730,16 @@ def alimentacao():
 				itemKilo[ultA] -= 0.5
 				if vida < 10:
 					vida += 1
+					print('\n\t+ 1 VIDA')
 			else:
 				if vida < 10:
 					vida += 1
+					print('\n\t+ 1 VIDA')
 				itemKilo.pop(ultA)
 	else:
 		if vida > 1:
 			vida -= 1
+			print('\n\t- 1 VIDA')
 		else:
 			vida = 0
 			print('\n\n\t[NAO SOBREVIVEU]\n\n')

@@ -44,43 +44,32 @@ while True:
 
 	if opc == 1:
 		exibirSaldo()
-		limpar(3)
 	elif opc == 2:
 		clear()
 		doit = ganharDoits()
-		limpar(3)
 	elif opc == 3:
 		clear()
 		braga = ganharBragas()
-		limpar(3)
 	elif opc == 4:
 		clear()
 		braga, doit = conversao()
-		limpar(5)
 	elif opc == 5:
 		clear()
 		braga, doit = compras()
-		limpar(3)
 	elif opc == 6:
 		exibirItens()
-		limpar(1)
 	elif opc == 7:
 		clear()
 		itemPeca = fugir()
-		limpar(2)
 	elif opc == 8:
 		clear()
 		encerramento()
 	elif opc == 34:
 		clear()
 		bugImagem()
-		limpar(1)
 	else:
-		if obs == True:
-			limpar(2)
-		else:
-			print('\n[ERROR] - Número sem utilidade (~_~)')
-			limpar(2)
+		print('\n[ERROR] - Número sem utilidade (~_~)')
 
 	vida = alimentacao()
 	dias = contarDias()
+	limpar(2)
