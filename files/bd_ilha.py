@@ -314,7 +314,7 @@ def calcular(ope,nivel):
 			resp = valor1 * valor2
 		elif ope == 4:
 			print(valor1,' / ',valor2)
-			resp = valor1 / valor2
+			resp = round(valor1 / valor2,2)
 		elif ope == 5:
 			operador = rand(4) + 1
 
@@ -329,7 +329,7 @@ def calcular(ope,nivel):
 				resp = valor1 * valor2
 			elif operador == 4:
 				print(valor1,' / ',valor2)
-				resp = valor1 / valor2
+				resp = round(valor1 / valor2,2)
 
 		valor = input(' ~> ')
 		valor = floatConversor(valor)
@@ -427,31 +427,33 @@ def cifraBraga(ope):
 #Braga <-> Doit
 def conversao():
 	global doit, braga
+	cDoit = 0.625
+	cBraga  = 1.6
 	msm = '''
 \t***Conversão realizada***
 \nGraças ao nosso sistema de deposito
 imediato o valor convetido já se
 encotra disponivel para uso. Bom proveito\n
 '''
-	print('''
+	print(f'''
 	Sabendo que:
-	1 D$ = 1.6 B$
-	1 B$ = 0.625 D$
+	1 D$ = {cBraga} B$
+	1 B$ = {cDoit} D$
 	\nDigite que tipo de conversão deseja:\n
 	1 - Doits --> Braga
 	2 - Braga --> Doits
 	''')
-	num = input(' ~> ')
+
 	try:
+		num = input(' ~> ')
 		num = floatConversor(num)
 		if num == 1:
 			d = input('Quantidade de Doits para converter?\n ~> ')
 			d = floatConversor(d)
-
 			if d > doit:
 				print('\nVocê não tem tudo isso, meu caro (^_^)')
 			else:
-				convertido = round(d*1.6,2)
+				convertido = round(d*cBraga,2)
 				doit -= d
 				braga += convertido
 				print('\n%.2f D$ = %.2f B$' %(d,convertido))
@@ -465,17 +467,18 @@ encotra disponivel para uso. Bom proveito\n
 			if b > braga:
 				print('\nVocê não tem tudo isso, meu caro (v_V)')
 			else:
-				convertido = round(b*0.625,2)
+				convertido = round(b*cDoit,2)
 				braga -= b
 				doit += convertido
 				print('\n%.2f B$ = %.2f D$' %(b,convertido))
 				print('\n\tProcessando solicitação...')
 				carregamento()
 				print(msm)
-		else:
+		elif num > 2 or num < 1:
 			print('\nTODO ERRADO - Número sem utilidade\n')
 	except:
-		print('\n\t[ERROR] - Não é um número E_ _(0_0)_ /. ')
+		return (braga,doit)
+
 	return (braga,doit)
 
 #Suporte da funcao compras()
@@ -487,6 +490,7 @@ def transacao(lista,moeda,varejo):
 	while True:
 		clear()
 		i = 1
+
 		if len(lista) == len(alimento):
 			print('\tSaldo : ',round(moeda,2),' B$\n')
 			for (item,valor) in lista:
