@@ -37,7 +37,8 @@ nome = [
 'Rosa','Benedito','Leandro','Manoela',
 'Alice','Mario','Vitor','Beatriz',
 'Iago','Matias','Amanda','Elias',
-'Joana','Renata','Gabriel','Humberto'
+'Joana','Renata','Gabriel','Humberto',
+'Stefane','Cleiton'
 ]
 
 pais = [
@@ -60,25 +61,25 @@ comida = [
 
 #Compras e vendas somente com doits
 #Suporte da funcao compras()
-joia = [
-('Anel de pirata',58.5),
-('Anel dragão',37.9),
+joia = [ # 16
+('Anel de pirata',68.5),
+('Anel dragão',47.9),
 ('Peça de Diamante',740.0),
 ('Peça de Ouro',530.0),
 ('Peça de Prata',320.0),
 ('Peça de Bronze',188.0),
 ('Peça de Cobre',120.0),
-('Brinco estrela',46.9),
-('Brinco lua',33.3),
-('Colar de peixe',30.3),
+('Brinco estrela',56.9),
+('Brinco lua',43.3),
+('Colar de peixe',40.3),
 ('Estatua de sereia',299.8),
-('Pingente Ouro branco',120.87),
-('Pulseira de Ouro',97.4),
-('Pulseira de Prata',54.2),
-('Aliança de Ouro',78.4),
-('Aliança de Prata',48.2)
+('Pingente Ouro branco',130.87),
+('Pulseira de Ouro',107.4),
+('Pulseira de Prata',64.2),
+('Aliança de Ouro',88.4),
+('Aliança de Prata',58.2)
 ]
-veiculo = [
+veiculo = [ # 14
 ('Motocicleta',270.4),
 ('Bicicleta', 61.3),
 ('Bicicleta de 3 marchas', 73.3),
@@ -87,29 +88,35 @@ veiculo = [
 ('Carro de mão',50.6),
 ('Triciclo mecânico', 70.89),
 ('Triciclo motorizado', 134.7),
-('Carro de praia', 320.8),
+('Carro de praia', 360.8),
 ('Patinete', 40.2),
-('Skate', 63.2)
+('Skate', 63.2),
+('Moto', 320.5),
+('Andador',45.9),
+('Carrinho de bebe', 140.3)
 ]
 
 alimento = [
-('Agulha', 5.2),
-('Arraia', 22.1),
-('Anchova', 12.8),
+('Agulha', 15.2),
+('Arraia', 32.1),
+('Anchova', 22.8),
 ('Bacalhau', 26.3),
 ('Baiacu-de-espinhos', 18.2),
 ('Peixe-Agulha', 5.2),
-('Piaba', 16.5),
-('Sardinha', 4.5),
-('Camarão', 35.4),
-('Camarão pistola', 48.3),
+('Piaba', 36.5),
+('Sardinha', 14.5),
+('Camarão', 45.4),
+('Camarão pistola', 58.3),
 ('Ostra', 51.2),
 ('Mexilhão', 32.0),
 ('Lula', 130.2),
 ('Polvo',183.9),
 ('Lagosta', 74.8),
-('Bagaço de coco', 20.2),
-('Carangueijo', 7.3)
+('Bagaço de coco', 28.2),
+('Carangueijo', 47.3),
+('Amora',30.4),
+('Mamao', 25.6),
+('Graviola', 45.7)
 ]
 
 pecas = [
@@ -120,14 +127,14 @@ pecas = [
 # ASA DELTA 3 - 7
 ('Envoltorio',50),('Cesto',35),
 ('Queimador',70),('Tanque de propano',120),
-('Cordas de suspensao',40),('Valvula de parachute',60),
-('Altimetro',100),
+('Cordas de suspensao',40),('Valvula de parachute',80),
+('Altimetro',150),
 # BALAO 8 - 14
-('Casco',35),('Proa',40),
-('Popa',50),('Conves',120),
-('Leme',80),('Helice',90),
-('Mastro G',40),('Ancora',60),
-('Ponte de comando',120)
+('Casco',85),('Proa',90),
+('Popa',100),('Conves',170),
+('Leme',130),('Helice',140),
+('Mastro G',90),('Ancora',110),
+('Ponte de comando',200)
 # NAVIO 15 - 23
 ]
 metodoFuga = [['Jangada',3],['Planador',5],['Balao',7],['Navio',9]]
@@ -228,9 +235,9 @@ def exibirItens():
 	clear()
 	i = 0
 	for nome in inventario:
-		print('\n')
+		print('')
 		print(inventario[i].center(15,'_'))
-		print('\n')
+		print('')
 		if nome == inventario[0]:
 			for key in itemKilo.keys():
 				print(' ~> ',key,' : ',itemKilo[key],'Kgs' if itemKilo[key] > 1 else 'Kg')
@@ -542,11 +549,20 @@ def transacao(lista,moeda,varejo):
 
 
 def transacaoPecas(lista, moeda, varejo):
-	global SIM, NAO
+	global SIM, NAO, metodoFuga
 	codigo = []
 	clear()
 
 	print('\tSaldo : ',round(moeda,2),' D$\n')
+
+	i = 1
+	f = 0
+	for k,v in metodoFuga:
+		f += v
+		print(f'\n\t[{i},{f}] pecas de {k}')
+		i += v
+	print()
+
 	for i in range(3):
 		num = rand(len(pecas))
 		codigo.append(num)
@@ -660,11 +676,13 @@ def fugir():
 	return itemPeca
 
 def tentativaFuga(pecasM, pecasN, taxa,metodo):
-	global falha, dias, vida
+	global falha, dias, vida, itemUnidade
 	nomesPm = [nome for nome in pecasM]
 	nomesPn = [nome for nome,valor in pecasN]
 	conta = sum(1 for c in nomesPm if c in nomesPn)
 	numPecas = len(nomesPn)
+	favItens = len(itemUnidade)
+
 	if dias % 2 == 0 and (metodo[1] == 5 or metodo[1] == 7):
 		favoravel = 5
 		# + 5 % planador, balao
@@ -677,6 +695,7 @@ def tentativaFuga(pecasM, pecasN, taxa,metodo):
 	Metodo de fuga : {metodo[0]}
 	Taxa de sucesso inicial : {round(1/taxa*100,2)} %
 	Acrescimo do dia : + {favoravel} %
+	Acrescimo Itens : + {favItens} %
 	Numero de pecas necessarias : {metodo[1]}
 
 	Pecas necessarias,segue abaixo...
@@ -690,7 +709,7 @@ def tentativaFuga(pecasM, pecasN, taxa,metodo):
 		if conta == numPecas:
 			carregamento()
 			# TENTANDO BASEADO NA TAXA DE SUCESSO DO MEIO DE TRANSPORTE
-			chanceFuga = round(1 / taxa  * 100,2) + favoravel
+			chanceFuga = round(1 / taxa  * 100,2) + favoravel + favItens
 			indice = rand(100) + 1
 			if indice > chanceFuga:
 				print('\n\t\tFUGA MAU SUCEDIDA\n\tVoce perdeu 2 pontos de vida e as pecas do seu meio de transporte [~.~]')
