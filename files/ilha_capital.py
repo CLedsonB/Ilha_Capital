@@ -25,14 +25,14 @@ while True:
 
     -- Digite um dos numeros a seguir, {usuario} :
 
-	1 - Consultar Saldo
-	2 - Ganhar Doits
-	3 - Ganhar Bragas
-	4 - Converter suas moedas
-	5 - Fazer compras
-	6 - Seus itens
-	7 - Tentar fugir
-	8 - Desistir
+	[1] - Consultar Saldo
+	[2] - Ganhar Doits
+	[3] - Ganhar Bragas
+	[4] - Converter suas moedas
+	[5] - Fazer compras
+	[6] - Seus itens
+	[7] - Tentar fugir
+	[8] - Desistir
 	''')
 
 	try:

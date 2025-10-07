@@ -6,14 +6,14 @@ from random import randrange as rand
 clear = lambda: os.system('cls' if os.name == 'nt' else 'clear')
 
 usuario = ''
-braga = 1000
-doit = 1000
+braga = 0
+doit = 0
 dias = 1
-vida = 10
+vida = 5
 falha = 0
 itemKilo = {}
 itemUnidade = {}
-itemPeca = {'Paubique':2,'Toras': 2, 'Mastro P': 2}
+itemPeca = {}
 
 
 SIM = ['SIM','Sim','sim','s','S']
@@ -440,8 +440,8 @@ encotra disponivel para uso. Bom proveito\n
 	1 D$ = {cBraga} B$
 	1 B$ = {cDoit} D$
 	\nDigite que tipo de conversão deseja:\n
-	1 - Doits --> Braga
-	2 - Braga --> Doits
+	[1] - Doits --> Braga
+	[2] - Braga --> Doits
 	''')
 
 	try:
@@ -620,10 +620,10 @@ def compras():
 
 	realize aqui suas compras
 
-	1.Mercado de Joias
-	2.Mercado de Veiculos
-	3.Mercado de Alimentação
-	4.Mercado de Pecas de veiculos
+	[1]. Mercado de Joias
+	[2]. Mercado de Veiculos
+	[3]. Mercado de Alimentação
+	[4]. Mercado de Pecas de veiculos
 
 	''')
 	mercado = input('\t ~> ')
