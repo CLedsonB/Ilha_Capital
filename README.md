@@ -15,23 +15,22 @@ Quando você trabalha com calculos aritmeticas, você ganha Doits e pode comprar
 Quando você trabalha advinhando palavras, você ganha Bragas e pode comprar alimentos.
 
 - Desafios para Doits
-- Soma
-- Subtracao
-- Multiplicacao
-- Divisao
-- Aleatorio ( possui as 4 operacoes matematicas )
+  - Soma
+  - Subtracao
+  - Multiplicacao
+  - Divisao
+  - Aleatorio ( possui as 4 operacoes matematicas )
 
-E sao dividos em 3 niveis:
-
-- Facil (operacoes com numeros de 1 a 10)
-- Medio (operacoes com numeros de 10 a 50)
-- Dificil (operacoees com numeros de 50 a 100)
+- Niveis Disponiveis
+  - Facil (operacoes com numeros de 1 a 10)
+  - Medio (operacoes com numeros de 10 a 50)
+  - Dificil (operacoees com numeros de 50 a 100)
 
 
 - Desafios para Braga
-- Nome (Facil)
-- Pais (Medio)
-- Comida (Dificil)
+  - Nome (Facil)
+  - Pais (Medio)
+  - Comida (Dificil)
 
 Recompensas aumentam de acordo ao nivel de dificuldade
 
@@ -42,16 +41,15 @@ A ilha também oferece a possibilidade de converter suas moedas.
 
 No procedimento de compra, precisa dizer o número que corresponde ao produto e a quantidade em unidades ou kilogramas do produto, para encerrar as compras basta digitar 0.
 
-- Metodos de fuga
-
 Para encerrar o jogo, voce precisa fugir com sucesso da ilha, atualmente sao 4 meios de transporte e cada um tem sua porcentagem de sucesso inicial:
 
-- Jangada (1 / 9) %
-- Planador (1 / 7) %
-- Balao (1 / 5) %
-- Navio (1 / 3) %
+- Metodos de fuga
+  - Jangada (1 / 9) %
+  - Planador (1 / 7) %
+  - Balao (1 / 5) %
+  - Navio (1 / 3) %
 
-Suas chances podem aumentar em 5%  se voce tentar fugir nos dias favoraveis aos seus meios de transporte
+**Suas chances podem aumentar em 5%  se voce tentar fugir nos dias favoraveis aos seus meios de transporte**
 
 Caso voce nao tenha sucesso na fuga, todas as suas pecas sao destruidas e voce perdera 2 ponto de vida
 
