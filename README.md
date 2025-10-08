@@ -1,16 +1,67 @@
 # Ilha_Capital
 
-Um jogo de terminal feito em python.
+## Um jogo de terminal feito em Python.
 
-A historia é apresentada logo no inicio, o personagem principal passou por um naufragio e ao acordar estava em uma ilha onde não se via nada nas margens além de água. Ele entra para explorar e encontra uma civilização bem similar á conhecida por nós. O jogo se desenrola por meio de opções, o usuário precisa digitar os números e pressionar [enter].
+### SINOPSE
+
+A historia é apresentada logo no inicio, o personagem principal passou por um naufragio e ao acordar estava em uma ilha onde não se via nada nas margens além de água.
+Ele entra para explorar e encontra uma civilização bem similar á conhecida por nós
+O jogo se desenrola por meio de opções, o usuário precisa digitar os números e pressionar [enter].
+
+### JOGABILIDADE
 
 Você pode realizar dois tipos de trabalho e ganhar dois tipos de moedas diferentes.
-Quando você trabalha com somas aritmeticas, você ganha Doits e pode comprar bens e joias.
-Quando você trabalha com advinhar os nomes, você ganha Bragas e pode comprar alimentos.
+Quando você trabalha com calculos aritmeticas, você ganha Doits e pode comprar bens e joias.
+Quando você trabalha advinhando palavras, você ganha Bragas e pode comprar alimentos.
 
-A ilha também oferece a possibilidade de converter suas moedas, atualmente o Doit vale 1,6 a mais que a Braga. Para gastar esse dinheiro tem 2 mercados: De joias e de comida.
+- Desafios para Doits
+- Soma
+- Subtracao
+- Multiplicacao
+- Divisao
+- Aleatorio ( possui as 4 operacoes matematicas )
+
+E sao dividos em 3 niveis:
+
+- Facil (operacoes com numeros de 1 a 10)
+- Medio (operacoes com numeros de 10 a 50)
+- Dificil (operacoees com numeros de 50 a 100)
+
+
+- Desafios para Braga
+- Nome (Facil)
+- Pais (Medio)
+- Comida (Dificil)
+
+Recompensas aumentam de acordo ao nivel de dificuldade
+
+A ilha também oferece a possibilidade de converter suas moedas.
+
+1 D$ --> 1.6 B$
+1 B$ --> 0.625 D$
 
 No procedimento de compra, precisa dizer o número que corresponde ao produto e a quantidade em unidades ou kilogramas do produto, para encerrar as compras basta digitar 0.
+
+- Metodos de fuga
+
+Para encerrar o jogo, voce precisa fugir com sucesso da ilha, atualmente sao 4 meios de transporte e cada um tem sua porcentagem de sucesso inicial:
+
+- Jangada (1 / 9) %
+- Planador (1 / 7) %
+- Balao (1 / 5) %
+- Navio (1 / 3) %
+
+Suas chances podem aumentar em 5%  se voce tentar fugir nos dias favoraveis aos seus meios de transporte
+
+Caso voce nao tenha sucesso na fuga, todas as suas pecas sao destruidas e voce perdera 2 ponto de vida
+
+As pecas necessarias para construir seu meio de transporte voce encontra no mercado de pecas, sao 3 pecas aleatorias disponiveis por rodada
+Cada meio de transporte tem uma quantidade diferente de pecas, elas sao especificadas na secao 7, ao tentar fugir
+
+- Jangada (3 pecas)
+- Planador (5 pecas)
+- Balao (7 pecas)
+- Navio (9 pecas)
 
 
 Versões
